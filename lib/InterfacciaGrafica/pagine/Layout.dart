@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:front_shop/InterfacciaGrafica/pagine/Home.dart';
-import 'package:front_shop/InterfacciaGrafica/pagine/Ricerca.dart';
+import 'package:front_shop/InterfacciaGrafica/pagine/Carrello.dart';
 import 'package:front_shop/InterfacciaGrafica/pagine/Login.dart';
 
 class Layout extends StatefulWidget{
@@ -36,23 +36,21 @@ class _LayoutState extends State<Layout> {
             title: Text(title),
             bottom: TabBar(
               tabs:[
-                Tab(text: "home", icon: Icon(Icons.home_rounded)),
-                Tab(text: "ricerca", icon: Icon(Icons.search_rounded)),
-                Tab(text: "user", icon: Icon(Icons.person_rounded)),
+                Tab(text: "Home", icon: Icon(FontAwesomeIcons.home)),
+                Tab(text: "Utente", icon: Icon(FontAwesomeIcons.user)),
+                Tab(text: "Carrello", icon: Icon(FontAwesomeIcons.shoppingCart)),
               ],//tabs
             ),
           ),
           body: TabBarView(
             children: [
               Home(),
-              Ricerca(),
               Login(),
+              Carrello(),
             ],
 
           ),
         ),
     );//Default Tab Controoller
-
-
   }//build
 }//LayoutState

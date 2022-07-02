@@ -1,15 +1,15 @@
 
 import 'package:flutter/material.dart';
 
-class Ricerca extends StatefulWidget{
-  Ricerca({Key? key}) : super(key: key);
+class Carrello extends StatefulWidget{
+  Carrello({Key? key}) : super(key: key);
 
 
   @override
-  _SearchState createState() => _SearchState();
+  _CartState createState() => _CartState();
 }
 
-class _SearchState extends State<Ricerca>{
+class _CartState extends State<Carrello>{
 
   bool _searching = false;
 
