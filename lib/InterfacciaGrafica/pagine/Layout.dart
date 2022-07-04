@@ -3,15 +3,23 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:front_shop/InterfacciaGrafica/pagine/Home.dart';
 import 'package:front_shop/InterfacciaGrafica/pagine/Carrello.dart';
 import 'package:front_shop/InterfacciaGrafica/pagine/Login.dart';
+import 'package:front_shop/InterfacciaGrafica/pagine/ProdottiAdmin.dart';
+import 'package:front_shop/model/support/LogInResult.dart';
 
 class Layout extends StatefulWidget{
 
   final String title;
 
   Layout({Key? key,required String this.title}) : super(key: key);
+ // static _LayoutState layout=_LayoutState();
 
   @override
   _LayoutState createState() => _LayoutState(title);
+
+  //static void setLogState(LogInResult l){
+    //layout.setLogResult(l);
+  //}
+
 }//Layout
 
 class _LayoutState extends State<Layout> {
@@ -45,6 +53,7 @@ class _LayoutState extends State<Layout> {
           body: TabBarView(
             children: [
               Home(),
+             // ProdottiAdmin(),
               Login(),
               Carrello(),
             ],

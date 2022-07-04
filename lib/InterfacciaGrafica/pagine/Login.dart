@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:front_shop/InterfacciaGrafica/pagine/UserRegistration.dart';
 import 'package:front_shop/InterfacciaGrafica/pagine/Home.dart';
 import 'package:front_shop/InterfacciaGrafica/pagine/Carrello.dart';
+import 'package:front_shop/model/support/LogInResult.dart';
+
+import '../../model/Model.dart';
 
 class Login extends StatefulWidget{
 
@@ -15,6 +18,11 @@ class Login extends StatefulWidget{
 
 //Pagina di Login per utenti già registrati
 class _LoginState extends State<Login>{
+
+  bool _passwordVisible=false;
+
+  TextEditingController _controllerEmail = TextEditingController();
+  TextEditingController _controllerPass= TextEditingController();
 
   @override
   Widget build(BuildContext context){
@@ -39,12 +47,12 @@ class _LoginState extends State<Login>{
               center,
               children: [
                 SizedBox(height: 100,),
-                Icon(FontAwesomeIcons.doorOpen),
+                Icon(FontAwesomeIcons.doorOpen,size: 31),
                 SizedBox(height: 15,),
                 Text('ShopSite',
                   style: TextStyle(
                     color: Colors.black87,
-                    fontSize: 20,
+                    fontSize: 31,
                     fontStyle: FontStyle.italic,
                     fontWeight: FontWeight.bold,
                   ),
@@ -78,25 +86,47 @@ class _LoginState extends State<Login>{
                       SizedBox(height: 20,),
                       Container(
                         width: 250,
-                        child: TextField(
+                        child: TextFormField(
                           decoration: InputDecoration(
                             labelText: 'Indirizzo Email',
-                            suffixIcon: Icon(FontAwesomeIcons.envelope,size: 17,),
+                            suffixIcon: Icon(
+                              FontAwesomeIcons.envelope,
+                              size: 17,
+                            ),
                           ),
+                          controller: _controllerEmail,
                         ),
                       ),
                       Container(
                         width: 250,
-                        child: TextField(
-                          obscureText: true,
+                        child: TextFormField(
+                          obscureText: !_passwordVisible,
                           decoration: InputDecoration(
                             labelText: 'Password',
-                            suffixIcon: Icon(FontAwesomeIcons.eyeSlash, size: 17,),
+                            hintText: 'Inserisci la tua Password',
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                //Cambio l'icon in base alla visibilità della password
+                                _passwordVisible
+                                ?FontAwesomeIcons.eyeSlash
+                                :FontAwesomeIcons.eye,
+                                size:17,
+                              ),
+                              onPressed: () {
+                                //Aggiorno lo stato ad ogni click dell'utente
+                                setState(() {
+                                 _passwordVisible=!_passwordVisible;
+                                });
+                              },
+                            ),
                           ),
+                          controller: _controllerPass,
+                          onFieldSubmitted: login,
                         ),
                       ),
                       SizedBox(height: 20,),
                       GestureDetector(
+                        onTap: () => {loginA()},
                         child: Container(
                           alignment: Alignment.center,
                           width: 250,
@@ -169,47 +199,23 @@ class _LoginState extends State<Login>{
         ),
       );//Scaffold
   }//build
-}//LoginState
 
-/*class _LayoutRegistration extends StatelessWidget{
-  String title="";
+  void login(String s){
+    loginA();
+  }//login
 
-  _LayoutState(String title) {
-    this.title=title;
+  void loginA() async{
+
+    LogInResult result= await Model.sharedInstance.logIn(_controllerEmail.text,_controllerPass.text);
+    if(result==LogInResult.logged){
+      setState((){
+        print("rcodio");
+        //Layout.setLogState(LogInResult.logged);
+      });
+    }
   }
 
-  @override
-  Widget build(BuildContext context){
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.orangeAccent,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.elliptical(5,5),
-            ),
-          ),
-          title: Text(title),
-          bottom: TabBar(
-            tabs:[
-              Tab(text: "home", icon: Icon(Icons.home_rounded)),
-              Tab(text: "ricerca", icon: Icon(Icons.search_rounded)),
-              Tab(text: "user", icon: Icon(Icons.person_rounded)),
-            ],//tabs
-          ),
-        ),
-        body: TabBarView(
-          children: [
-            Home(),
-            Ricerca(),
-            _UserRegistration(),
-          ],
-        ),
-      ),
-    );//Default Tab Controoller
-  }//build
-} */
+}//LoginState
 
 
 //Pagina di registrazione dell'utente
@@ -239,3 +245,4 @@ class _UserRegistration extends StatelessWidget {
   }//build
 
 }//_UserRegistration
+
