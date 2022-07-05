@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:front_shop/model/Model.dart';
 import 'package:front_shop/model/support/Constants.dart';
-import 'package:front_shop/model/support/ProdProv.dart';
+import 'package:front_shop/Admin/ProdProv.dart';
 import 'package:provider/provider.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:responsive_grid/responsive_grid.dart';

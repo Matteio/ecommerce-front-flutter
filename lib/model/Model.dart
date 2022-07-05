@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:front_shop/model/manager/ProdService.dart';
 import 'package:front_shop/model/oggetti/Prodotto.dart';
 import 'package:http/http.dart' as http;
 import 'package:front_shop/model/manager/RestManager.dart';
@@ -8,6 +7,7 @@ import 'package:front_shop/model/oggetti/AuthenticationData.dart';
 import 'package:front_shop/model/support/Constants.dart';
 import 'package:front_shop/model/support/LogInResult.dart';
 
+import '../Admin/ProdService.dart';
 import 'oggetti/Utente.dart';
 
 class Model{
@@ -21,14 +21,19 @@ class Model{
 
   Future<LogInResult> logIn(String email, String password) async {
     try{
+      print("Sono dentro il metodo logIn");
       Map<String, String> params = Map();
       params["grant_type"] = "password";
       params["client_id"] = Constants.CLIENT_ID;
       params["client_secret"] = Constants.CLIENT_SECRET;
       params["username"] = email;
       params["password"] = password;
+      print("Chiamo il Manager mio");
       String result = await _restManager.makePostRequest(Constants.ADDRESS_AUTHENTICATION_SERVER, Constants.REQUEST_LOGIN, params, type: TypeHeader.urlencoded);
+      //http.Response result = await _prodService.post(Constants.REQUEST_LOGIN, params);
+      print("result: "+result);
       _authenticationData = AuthenticationData.fromJson(jsonDecode(result));
+      print("Authentication data"+_authenticationData.toString());
       if ( _authenticationData.hasError() ) {
         if ( _authenticationData.error == "Invalid user credentials" ) {
           return LogInResult.error_wrong_credentials;

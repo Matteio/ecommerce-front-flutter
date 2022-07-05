@@ -126,7 +126,7 @@ class _LoginState extends State<Login>{
                       ),
                       SizedBox(height: 20,),
                       GestureDetector(
-                        onTap: () => {loginA()},
+                        onTap: () => {loginDc()},
                         child: Container(
                           alignment: Alignment.center,
                           width: 250,
@@ -201,17 +201,20 @@ class _LoginState extends State<Login>{
   }//build
 
   void login(String s){
-    loginA();
+    loginDc();
   }//login
 
-  void loginA() async{
-
+  void loginDc() async{
+    print(_controllerEmail.text);
+    print(_controllerPass.text);
+    print("Prendo il LoginResult");
     LogInResult result= await Model.sharedInstance.logIn(_controllerEmail.text,_controllerPass.text);
+    print(result.toString());
+    print("porcamadonna");
     if(result==LogInResult.logged){
-      setState((){
-        print("rcodio");
-        //Layout.setLogState(LogInResult.logged);
-      });
+      print("Hai fatto l'accesso porcodio");
+    }else{
+      print("Non hai fatto l'accesso porcamadonna");
     }
   }
 

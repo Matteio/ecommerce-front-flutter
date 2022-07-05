@@ -4,7 +4,8 @@ import 'package:http/http.dart' as http;
 
 class ProdService {
   Map<String, String> headers = {
-    "content-type": "application/json",
+    //"content-type": "application/json",
+    "content-type": "application/x-www-form-urlencoded",
     "accept": "application/json",
   };
 
@@ -25,11 +26,25 @@ class ProdService {
       String bodyString = json.encode(body);
       http.Response response =
         await http.post(uri, headers: headers, body: bodyString);
+      print("respons"+response.body);
       return response;
     } catch (e) {
       return http.Response({"message": e}.toString(), 400);
     }
   }
+
+ /* Future<String> post1(String url, Map<String, dynamic> body) async {
+    try {
+      Uri uri = Uri.parse(Constants.ADDRESS_STORE_SERVER + url);
+      String bodyString = json.encode(body);
+      String response =
+        await http.post(uri, headers: headers, body: bodyString).toString();
+      return response;
+    } catch (e) {
+      return "Porcodio";
+    }
+  }*/
+
 
   Future<http.Response> put(String url, Map<String, dynamic> body) async {
     try {

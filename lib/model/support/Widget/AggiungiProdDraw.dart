@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:front_shop/model/oggetti/Prodotto.dart';
-import 'package:front_shop/model/support/ProdProv.dart';
+import 'package:front_shop/Admin/ProdProv.dart';
 import 'package:front_shop/model/support/Widget/MyButton.dart';
 import 'package:provider/provider.dart';
 

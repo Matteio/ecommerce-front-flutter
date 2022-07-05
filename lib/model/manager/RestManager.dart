@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
+import 'package:front_shop/Admin/ProdService.dart';
 import 'package:http/http.dart';
 
 import '../support/Constants.dart';
@@ -17,11 +18,16 @@ class RestManager{
   String? token;
 
   Future<String> _makeRequest(String serverAddress, String servicePath, String method, TypeHeader type, {Map<String, String>? value, dynamic body}) async {
-    Uri uri = Uri.https(serverAddress, servicePath, value);
+    print("uri: ");
+    Uri uri = Uri.http(serverAddress, servicePath, value);
+    print(uri);
+    //Uri uri = Uri.parse("http://localhost:8080/auth/realms/shop/protocol/openid-connect/token");
     bool errorOccurred = false;
+    var response;
     while ( true ) {
       try {
-        var response;
+        //var response;
+        //print("response: "+response.toString());
         // setting content type
         String contentType="application/json;charset=utf-8";
         dynamic formattedBody;
@@ -42,11 +48,15 @@ class RestManager{
         // making request
         switch ( method ) {
           case "post":
+            print("CASO POST");
+            print(headers.toString());
+            print(formattedBody);
             response = await post(
               uri,
               headers: headers,
               body: formattedBody,
             );
+            print("response_post: "+response.toString());
             break;
           case "get":
             response = await get(
@@ -77,12 +87,15 @@ class RestManager{
           delegate!.errorNetworkOccurred(Constants.MESSAGE_CONNECTION_ERROR);
           errorOccurred = true;
         }
+        print(response.toString());
+        print("PorcodioERRORE");
         await Future.delayed(const Duration(seconds: 5), () => null); // not the best solution
       }
     }
   }
 
   Future<String> makePostRequest(String serverAddress, String servicePath, dynamic value, {TypeHeader type = TypeHeader.json}) async {
+    print("MakePostRequest");
     return _makeRequest(serverAddress, servicePath, "post", type, body: value);
   }
 

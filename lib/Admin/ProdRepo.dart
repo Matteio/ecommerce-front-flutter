@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:front_shop/model/manager/ProdService.dart';
 import 'package:http/http.dart' as http;
-import '../oggetti/Prodotto.dart';
-import 'Constants.dart';
+import '../model/oggetti/Prodotto.dart';
+import '../model/support/Constants.dart';
+import 'ProdService.dart';
 
 class ProdRepo {
 

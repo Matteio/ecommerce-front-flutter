@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:front_shop/model/oggetti/Prodotto.dart';
 import 'package:front_shop/model/support/Constants.dart';
-import 'package:front_shop/model/support/ProdRepo.dart';
+import 'package:front_shop/Admin/ProdRepo.dart';
 import 'package:http/http.dart';
-import '../Model.dart';
+import '../model/Model.dart';
 
 class ProdProv extends ChangeNotifier{
 
