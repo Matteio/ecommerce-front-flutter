@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:front_shop/model/oggetti/Prodotto.dart';
+import 'package:front_shop/model/oggetti/User.dart';
 import 'package:http/http.dart' as http;
 import 'package:front_shop/model/manager/RestManager.dart';
 import 'package:front_shop/model/oggetti/AuthenticationData.dart';
@@ -152,5 +153,9 @@ class Model{
       return; // not the best solution
     }
   }*/
+
+  Future<String> registraUtente(User u) async{
+    return await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, "/r", u);
+  }//registraUtente
 
 }//Model

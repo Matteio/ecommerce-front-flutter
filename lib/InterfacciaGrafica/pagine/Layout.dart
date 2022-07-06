@@ -5,28 +5,27 @@ import 'package:front_shop/InterfacciaGrafica/pagine/Carrello.dart';
 import 'package:front_shop/InterfacciaGrafica/pagine/Login.dart';
 import 'package:front_shop/model/support/LogInResult.dart';
 
+import 'Loggato.dart';
+
 class Layout extends StatefulWidget{
 
   final String title;
 
   Layout({Key? key,required String this.title}) : super(key: key);
- // static _LayoutState layout=_LayoutState();
+  static _LayoutState layout= _LayoutState() ;
 
   @override
-  _LayoutState createState() => _LayoutState(title);
+  _LayoutState createState() => layout;
 
-  //static void setLogState(LogInResult l){
-    //layout.setLogResult(l);
-  //}
+  static void setLogState(LogInResult l){
+    layout.setLogResult(l);
+  }
 
 }//Layout
 
 class _LayoutState extends State<Layout> {
-  String title="";
-
-  _LayoutState(String title) {
-    this.title=title;
-  }
+  String title="shopSite";
+  LogInResult logInResult=LogInResult.error_wrong_credentials;
 
   @override
   Widget build(BuildContext context){
@@ -40,25 +39,40 @@ class _LayoutState extends State<Layout> {
                 bottom: Radius.elliptical(5,5),
               ),
             ),
-            title: Text(title),
+            title: Text(title, style: TextStyle(
+              color: Colors.white,
+              fontStyle: FontStyle.italic,
+              fontWeight: FontWeight.bold,
+              fontSize: 31,
+            )),
             bottom: TabBar(
               tabs:[
                 Tab(text: "Home", icon: Icon(FontAwesomeIcons.home)),
-                Tab(text: "Utente", icon: Icon(FontAwesomeIcons.user)),
                 Tab(text: "Carrello", icon: Icon(FontAwesomeIcons.shoppingCart)),
+                Tab(text: "Utente", icon: Icon(FontAwesomeIcons.user)),
               ],//tabs
             ),
           ),
-          body: TabBarView(
-            children: [
-              Home(),
-             // ProdottiAdmin(),
-              Login(),
-              Carrello(),
-            ],
-
+          body: getBody(),
           ),
-        ),
-    );//Default Tab Controoller
+    );
   }//build
+
+  Widget getBody(){
+    return logInResult==LogInResult.logged?
+        TabBarView(children: [Home(), Carrello(), Loggato()]):
+    TabBarView(children: [
+                Home(),
+                // ProdottiAdmin(),
+                Carrello(),
+                Login(),
+    ]);
+  }
+
+  void setLogResult(LogInResult l){
+    setState((){
+      this.logInResult=l;
+    });
+  }//setLogResult
+
 }//LayoutState
