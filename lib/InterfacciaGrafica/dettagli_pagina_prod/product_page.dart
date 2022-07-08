@@ -14,7 +14,7 @@ class PaginaProdotto extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.orangeAccent,
+      backgroundColor: Colors.white,
       body: Column(
         children: [
           Container(
@@ -23,13 +23,14 @@ class PaginaProdotto extends StatelessWidget {
             width: double.infinity,
             child: Image.network(prodotto.image),
           ),
+          SizedBox(height: 20,),
           Expanded(
             child: Stack(
               children: [
                 Container(
                   padding: const EdgeInsets.only(top: 50, right: 14, left: 14),
                   decoration: const BoxDecoration(
-                    color: Colors.white,
+                    color: Colors.orangeAccent,
                     borderRadius: BorderRadius.only(
                       topLeft: Radius.circular(30),
                       topRight: Radius.circular(30),
@@ -78,7 +79,7 @@ class PaginaProdotto extends StatelessWidget {
       ),
       bottomNavigationBar: Container(
         height: 70,
-        color: Colors.white,
+        color: Colors.orangeAccent,
         padding: EdgeInsets.all(10),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -106,14 +107,14 @@ class PaginaProdotto extends StatelessWidget {
                 child: Container(
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
-                    color: Colors.orangeAccent,
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Padding(
                     padding: EdgeInsets.all(13.0),
                     child: Text('+ Add to Cart',
                       style: TextStyle(
-                          color: Colors.white,
+                          color: Colors.orangeAccent,
                           fontSize: 20,
                           fontWeight: FontWeight.bold
                       ),

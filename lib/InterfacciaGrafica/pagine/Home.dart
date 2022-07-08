@@ -83,12 +83,12 @@ class _HomeState extends State<Home>{
       //_prodotti;
       print("ricerca");
     });
-    _searchFiledController.text==""?
+    _searchFiledController.text==null?
         Model.sharedInstance.getAll1().then((result){
           setState((){
             _searching=false;
-            print(result);
-            //_prodotti=result;
+            //print(result);
+            _prodotti=result;
           });
         }):
     Model.sharedInstance.searchProdotto(_searchFiledController.text).then((result) {
@@ -153,7 +153,7 @@ class _HomeState extends State<Home>{
       child: Column(
         children: <Widget> [
           SizedBox(
-            height: 800,
+            height: 850,
             child: Stack(
               children: <Widget> [
                 Container(
