@@ -1,4 +1,6 @@
 
+import 'dart:ui';
+
 enum SortTipi{ CRES, DECR, }
 
 enum GetTipi{ FILTRA, PAGINAZIONE, }
@@ -21,11 +23,18 @@ class Constants {
 
 
   // requests
-  static final String REQUEST_SEARCH_PRODUCTS = "/prodotti/cerca";
-  static final String REQUEST_ADD_USER = "/utenti/crea";
-  static final String REQUEST_EDIT_PRODUCTS="/prodotti/edit";
-  static final String REQUEST_ADD_PRODUCTS="/prodotti/add";
-  static final String REQUEST_DELETE_PRODUCTS="/prodotti/delete/";
+  static final String REQUEST_SEARCH_PRODUCTS_PAGED = "/prodotti/getAll/paged" ;
+  static final String REQUEST_SEARCH_PRODUCTS_BY_NAME = "/prodotti/getByName" ;
+  static final String REQUEST_SEARCH_PRODUCTS_ALL = "/prodotti/getAll" ;
+  static final String REQUEST_REGISTER_USER = "/r";
+  static final String REQUEST_EDIT_PRODUCTS="/prodotti/admin/edit";
+  static final String REQUEST_ADD_PRODUCTS="/prodotti/admin/add";
+  static final String REQUEST_DELETE_PRODUCTS="/prodotti/admin/delete/"; // +{idProdotto}
+  static final String REQUEST_ADD_ORDINE="/addOrdin";
+  static final String REQUEST_DELETE_ORDINE="/delete/";
+  static final String REQUEST_SEARCH_ORDINE_BY_USER="/get/";
+  static final String REQUEST_SEARCH_ORDINE_BY_DATA="/perData";
+
 
   // states
   static final String STATE_CLUB = "club";
@@ -39,5 +48,9 @@ class Constants {
 
   // messages
   static final String MESSAGE_CONNECTION_ERROR = "connection_error";
+
+  //color
+  static final textColor = Color(0xFF535353);
+  static final textLightColor = Color(0xFFACACAC);
 
 }//Constants

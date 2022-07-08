@@ -24,9 +24,11 @@ enum page{
 
 //Pagina di Login per utenti già registrati
 class _LoginState extends State<Login>{
+
   page p = page.login;
   bool _passwordVisible=false;
   Text _avviso=Text("");
+
 
   TextEditingController _controllerEmail = TextEditingController();
   TextEditingController _controllerPass= TextEditingController();
@@ -38,6 +40,7 @@ class _LoginState extends State<Login>{
   TextEditingController _regControllerCognome = TextEditingController();
   TextEditingController _regControllerTelefono = TextEditingController();
   TextEditingController _regControllerIndirizzo = TextEditingController();
+  TextEditingController _regControllerCf = TextEditingController();
 
   @override
   Widget build(BuildContext context){
@@ -297,7 +300,7 @@ class _LoginState extends State<Login>{
               ),
               SizedBox(height: 30,),
               Container(
-                height: 480,
+                height: 530,
                 width: 325,
                 decoration: BoxDecoration(
                   color: Colors.white,
@@ -307,6 +310,16 @@ class _LoginState extends State<Login>{
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     SizedBox(height: 20,),
+                    Container(
+                      width: 250,
+                      child: TextFormField(
+                        decoration: InputDecoration(
+                          labelText: 'Codice Fiscale',
+                        ),
+                        controller: _regControllerCf,
+                      ),
+                    ),
+                    SizedBox(height: 5,),
                     Container(
                       width: 250,
                       child: TextFormField(
@@ -449,15 +462,18 @@ class _LoginState extends State<Login>{
       username: _regControllerUser.text,
       password: _regControllerPass.text,
       utente: Utente(
+        codiceFiscale: _regControllerCf.text,
         nome: _regControllerNome.text,
         cognome: _regControllerCognome.text,
         indirizzo: _regControllerIndirizzo.text,
+        email: _regControllerEmail.text,
         telefono: _regControllerTelefono.text
       )
     );
     Model.sharedInstance.registraUtente(u).then((value) {
       if(value.compareTo("registrazione completata")==0){
         setState((){
+          _regControllerCf.clear();
           _regControllerNome.clear();
           _regControllerCognome.clear();
           _regControllerTelefono.clear();
@@ -481,6 +497,5 @@ class _LoginState extends State<Login>{
       }
     });//registraUtente
   }//registratiDc
-
 
 }//LoginState

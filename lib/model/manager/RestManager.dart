@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'dart:convert';
-import 'package:front_shop/Admin/ProdService.dart';
+//import 'package:front_shop/Admin/ProdService.dart';
 import 'package:http/http.dart';
 
 import '../support/Constants.dart';
@@ -17,7 +17,7 @@ class RestManager{
   ErrorListener? delegate;
   String? token;
 
-  Future<String> _makeRequest(String serverAddress, String servicePath, String method, TypeHeader type, {Map<String, String>? value, dynamic body}) async {
+  Future<String> _makeRequest(String serverAddress, String servicePath, String method, TypeHeader? type, {Map<String, String>? value, dynamic body}) async {
     print("uri: ");
     Uri uri = Uri.http(serverAddress, servicePath, value);
     print(uri);
@@ -27,7 +27,7 @@ class RestManager{
     while ( true ) {
       try {
         //var response;
-        //print("response: "+response.toString());
+        print("response: "+response.toString());
         // setting content type
         String contentType="application/json;charset=utf-8";
         dynamic formattedBody;
@@ -59,10 +59,12 @@ class RestManager{
             print("response_post: "+response.toString());
             break;
           case "get":
+            print("Caso get");
             response = await get(
               uri,
               headers: headers,
             );
+            print(response.toString());
             break;
           case "put":
             response = await put(
@@ -100,15 +102,20 @@ class RestManager{
   }
 
   Future<String> makeGetRequest(String serverAddress, String servicePath, [Map<String, String>? value, TypeHeader? type]) async {
-    return _makeRequest(serverAddress, servicePath, "get", type!, value: value);
+    print("MakeGetRequest");
+    print("serverAddress: " + serverAddress);
+    print("serverPath: " + servicePath);
+    print("value: " + value.toString());
+    print("type: " + type.toString());
+    return _makeRequest(serverAddress, servicePath, "get", type, value: value);
   }
 
   Future<String> makePutRequest(String serverAddress, String servicePath, [Map<String, String>? value, TypeHeader? type]) async {
-    return _makeRequest(serverAddress, servicePath, "put", type!, value: value);
+    return _makeRequest(serverAddress, servicePath, "put", type, value: value);
   }
 
   Future<String> makeDeleteRequest(String serverAddress, String servicePath, [Map<String, String>? value, TypeHeader? type]) async {
-    return _makeRequest(serverAddress, servicePath, "delete", type!, value: value);
+    return _makeRequest(serverAddress, servicePath, "delete", type, value: value);
   }
 
 }//RestManager

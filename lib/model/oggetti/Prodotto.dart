@@ -1,14 +1,14 @@
 class Prodotto{
 
-  int? idProdotto;
-  String? nome;
-  String? descrizione;
-  double? prezzo;
+  int idprodotto;
+  String nome;
+  String descrizione;
+  double prezzo;
   int? disponibilita;
-  String? image;
+  String image;
 
   Prodotto({
-    required this.idProdotto,
+    required this.idprodotto,
     required this.nome,
     required this.descrizione,
     required this.prezzo,
@@ -16,11 +16,11 @@ class Prodotto{
     required this.image,
   });
 
-  Prodotto.empty();
+  //Prodotto.empty();
 
   factory Prodotto.fromJson(Map<String, dynamic> json){
     return Prodotto(
-        idProdotto: json['idProdotto'],
+        idprodotto: json['idprodotto'],
         nome: json['nome'],
         descrizione: json['descrizione'],
         prezzo: json['prezzo'],
@@ -31,7 +31,7 @@ class Prodotto{
 
   Map<String, dynamic> toJson(Prodotto prodotto){
     return {
-      "idProdotto": prodotto.idProdotto,
+      "idprodotto": prodotto.idprodotto,
       "nome": prodotto.nome,
       "descrizione": prodotto.descrizione,
       "prezzo": prodotto.prezzo,
@@ -42,7 +42,7 @@ class Prodotto{
 
   @override
   String toString() {
-    return 'Prodotto{idProdotto: $idProdotto,'
+    return 'Prodotto{idProdotto: $idprodotto,'
         ' nome: $nome,'
         ' descrizione: $descrizione,'
         ' prezzo: $prezzo,'

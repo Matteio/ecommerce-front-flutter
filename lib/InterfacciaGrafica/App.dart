@@ -4,9 +4,6 @@ import 'package:front_shop/model/support/Constants.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
-import '../Admin/ProdProv.dart';
-import '../Admin/ProdottiAdmin.dart';
-
 class App extends StatelessWidget{
 
 

@@ -1,22 +1,24 @@
 import 'dart:async';
 import 'dart:convert';
+//import 'dart:ffi';
+//import 'dart:ffi';
 import 'package:front_shop/model/oggetti/Prodotto.dart';
 import 'package:front_shop/model/oggetti/User.dart';
-import 'package:http/http.dart' as http;
+//import 'package:http/http.dart' as http;
 import 'package:front_shop/model/manager/RestManager.dart';
 import 'package:front_shop/model/oggetti/AuthenticationData.dart';
 import 'package:front_shop/model/support/Constants.dart';
 import 'package:front_shop/model/support/LogInResult.dart';
 
-import '../Admin/ProdService.dart';
 import 'oggetti/Utente.dart';
 
 class Model{
 
   static Model sharedInstance = Model();
 
-  ProdService _prodService=ProdService();
-  RestManager _restManager=RestManager();
+  //ProdService _prodService=ProdService();
+
+  RestManager _restManager = RestManager();
 
   late AuthenticationData _authenticationData;
 
@@ -92,8 +94,8 @@ class Model{
     }
   }
 
-  Future<Map<String,dynamic>> getProdotti(int page,
-      String?prodCercato, SortTipi? sortTipi)async{
+  /*Future<Map<String,dynamic>> getProdotti(int page,
+      String? prodCercato, SortTipi? sortTipi)async{
     Map<String,String> params = {
       "pag": page.toString(),
       "limite": Constants.PAGE_LIMIT.toString(),
@@ -114,9 +116,55 @@ class Model{
       "numero pagina": pagineData
     };
     return datiRet;
+  }*/
+
+  Future<List<Prodotto>> getAll(int pageNumber, int pageSize, String sortBy) async {
+    Map<String,String> params=Map();
+    params["pageNumber"]=pageNumber.toString();
+    params["pageSize"]=pageSize.toString();
+    params["sortBy"]=sortBy;
+    try{
+      return List<Prodotto>.from(json.decode(
+          await _restManager.makeGetRequest(
+            Constants.ADDRESS_STORE_SERVER,
+            Constants.REQUEST_SEARCH_PRODUCTS_PAGED,
+            params)).map((i) => Prodotto.fromJson(i)).toList());
+    }catch(e){
+      throw Exception("Errore nella restituzione dei prodotti paged");
+    }
   }
 
+  Future<List<Prodotto>> getAll1() async {
+    try{
+      return List<Prodotto>.from(json.decode(
+        await _restManager.makeGetRequest(
+          Constants.ADDRESS_STORE_SERVER,
+          Constants.REQUEST_SEARCH_PRODUCTS_ALL)).map((i) => Prodotto.fromJson(i)).toList());
+    }catch(e){
+      print(e);
+      throw Exception("Errore nella ricerca del prodotto");
+    }
+  }
 
+  Future<List<Prodotto>> searchProdotto(String name) async{
+    Map<String,String> params = Map();
+    print(name);
+    params["name"] = name;
+    try{
+      print(params);
+      return List<Prodotto>.from(json.decode(
+          await _restManager.makeGetRequest(
+              Constants.ADDRESS_STORE_SERVER,
+              Constants.REQUEST_SEARCH_PRODUCTS_BY_NAME,
+              params)).map((i) => Prodotto.fromJson(i)).toList());
+    }catch(e){
+      print(e);
+      throw Exception("Errore nella ricerca del prodotto");
+    }
+  }//searchProdotto
+
+
+  /*
   Future<Prodotto> aggiungiProdotto(Prodotto prodotto) async{
     http.Response response = await _prodService.post(Constants.REQUEST_ADD_PRODUCTS, prodotto.toJson(prodotto));
     dynamic responseJson = jsonDecode(response.body);
@@ -138,6 +186,7 @@ class Model{
     dynamic responseJson = jsonDecode(response.body);
     final jsonMessage = responseJson['message'];
   }
+  */
 
   /*Future<Utente> addUser(Utente user) async {
     try {

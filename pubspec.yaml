@@ -21,6 +21,7 @@ dependencies:
   responsive_grid: ^2.0.0
   provider: ^6.0.1
   http: ^0.12.0+4
+  get: ^4.6.5
 
 dev_dependencies:
   flutter_test:
@@ -33,5 +34,5 @@ flutter:
 
   uses-material-design: true
   assets:
-    - images/login.png
+    - assets/images/prova.jpeg
 

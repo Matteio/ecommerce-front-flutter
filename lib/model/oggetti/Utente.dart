@@ -1,36 +1,36 @@
 class Utente {
 
   //int idUtente;
-  //String codice;
+  String codiceFiscale;
   String nome;
   String cognome;
   String telefono;
-  //String email;
+  String email;
   String indirizzo;
 
-  Utente({/*required this.idUtente,required this.codice,*/required this.nome,
-    required this.cognome,required this.telefono,/*required this.email,*/
+  Utente({required this.codiceFiscale, /*required this.codice,*/ required this.nome,
+    required this.cognome,required this.telefono,required this.email,
      required this.indirizzo});
 
   factory Utente.fromJson(Map<String, dynamic> json){
     return Utente(
       //idUtente: json['idUtente'],
-      //codice: json['codice'],
+      codiceFiscale: json['codiceFiscale'],
       nome: json['nome'],
       cognome: json['cognome'],
       telefono: json['telefono'],
-      //email: json['email'],
+      email: json['email'],
       indirizzo: json['indirizzo'],
     );
   }
 
   Map<String, dynamic> toJson() => {
    // 'idUtente': idUtente,
-    //'codice': codice,
+    'codiceFiscale': codiceFiscale,
     'nome': nome,
     'cognome': cognome,
     'telefono': telefono,
-    //'email': email,
+    'email': email,
     'indirizzo': indirizzo,
   };
 
