@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:front_shop/InterfacciaGrafica/pagine/Carrello.dart';
 import 'package:front_shop/model/oggetti/Prodotto.dart';
 import 'package:get/get.dart';
 
@@ -102,7 +103,7 @@ class PaginaProdotto extends StatelessWidget {
             Expanded(
               child: InkWell(
                 onTap: () {
-                  print("Add to Cart");
+                  _addToCart();
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -128,5 +129,9 @@ class PaginaProdotto extends StatelessWidget {
       ),
     );//scaffold
   }//build
+
+  void _addToCart(){
+
+  }//addToCart
 
 }//NomeProdottoEImmagine

@@ -2,7 +2,10 @@ import 'dart:async';
 import 'dart:convert';
 //import 'dart:ffi';
 //import 'dart:ffi';
+import 'package:front_shop/model/manager/CartManager.dart';
+import 'package:front_shop/model/oggetti/Acquisto.dart';
 import 'package:front_shop/model/oggetti/Prodotto.dart';
+import 'package:front_shop/model/oggetti/ProdottoInAcquisto.dart';
 import 'package:front_shop/model/oggetti/User.dart';
 //import 'package:http/http.dart' as http;
 import 'package:front_shop/model/manager/RestManager.dart';
@@ -12,6 +15,22 @@ import 'package:front_shop/model/support/LogInResult.dart';
 
 import 'oggetti/Utente.dart';
 
+enum addToCartResult{
+  added,
+  quantityUnavailable,
+  setted,
+  unknown
+}
+enum HttpResult{
+  done,
+  unknow,
+  error,
+  quantityUnavailable,
+  alreadyExist,
+  cartIsEmpty,
+  productDoesNotExist
+}
+
 class Model{
 
   static Model sharedInstance = Model();
@@ -19,6 +38,7 @@ class Model{
   //ProdService _prodService=ProdService();
 
   RestManager _restManager = RestManager();
+  CartManager _cartManager = CartManager();
 
   late AuthenticationData _authenticationData;
 
@@ -125,7 +145,7 @@ class Model{
     params["sortBy"]=sortBy;
     try{
       return List<Prodotto>.from(json.decode(
-          await _restManager.makeGetRequest(
+          await _cartManager.makeGetRequest(
             Constants.ADDRESS_STORE_SERVER,
             Constants.REQUEST_SEARCH_PRODUCTS_PAGED,
             params)).map((i) => Prodotto.fromJson(i)).toList());
@@ -188,23 +208,116 @@ class Model{
   }
   */
 
-  /*Future<Utente> addUser(Utente user) async {
-    try {
-      String rawResult = await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_ADD_USER, user);
-      if ( rawResult.contains(Constants.RESPONSE_ERROR_MAIL_USER_ALREADY_EXISTS) ) {
-        return ; // not the best solution
-      }
-      else {
-        return Utente.fromJson(jsonDecode(rawResult));
-      }
-    }
-    catch (e) {
-      return; // not the best solution
-    }
-  }*/
 
   Future<String> registraUtente(User u) async{
     return await _restManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, "/r", u);
   }//registraUtente
+
+  Future<List<Acquisto>> getMyOrdini() async{
+    try{
+      String res = await _cartManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_GET_ACQUISTI);
+      List acquisti=jsonDecode(res);
+      List<Acquisto> ret=acquisti.map((e) => new Acquisto.fromJson(e)).toList();
+      return ret;
+    }catch(err){
+      print(err);
+      return[];
+    }
+  }//getMyOrdini
+
+  Future<List<ProdottoInAcquisto>> removeFromCart(String nomeProd) async{
+    try{
+      Map<String,String> params={};
+      params["nomeProd"]=nomeProd;
+      String res=await _cartManager.makePostRequest(Constants.ADDRESS_STORE_SERVER, Constants.REQUEST_REMOVE_FROM_CART,params: params);
+      List carrello=jsonDecode(res);
+      return carrello.map((e) => ProdottoInAcquisto.fromJson(e)).toList();
+    }catch(err){
+      print(err);
+      return [];
+    }
+  }//removeFromCart
+
+  Future<HttpResult> acquistaCart() async{
+    try{
+      String res=await _cartManager.makePostRequest(Constants.ADDRESS_STORE_SERVER,
+          Constants.REQUEST_COMPRA_CART);
+      if(res.contains(Constants.RESPONSE_ERROR_QUANTITY_PRODUCT_UNAVAILABLE))
+        return HttpResult.quantityUnavailable;
+      else if(res.contains(Constants.RESPONSE_ERROR_PRODUCT_NOT_FOUND))
+        return HttpResult.productDoesNotExist;
+      else if(res.contains(Constants.RESPONSE_ERROR_CART_IS_EMPTY))
+        return HttpResult.cartIsEmpty;
+      else
+        return HttpResult.done;
+    }catch(err){
+      print(err);
+      return HttpResult.unknow;
+    }
+  }
+
+  Future<List<ProdottoInAcquisto>> getUserCart() async{
+    try{
+      String res=await _cartManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER,
+          Constants.REQUEST_GET_CART);
+      List pia=jsonDecode(res);
+      return pia.map((e) => ProdottoInAcquisto.fromJson(e)).toList();
+    }catch(err){
+      print(err);
+      return [];
+    }
+  }
+
+  Future<addToCartResult> addToCart(String email,String nomeProdotto,int quantita) async {
+    try{
+      Map<String,String> params={};
+      params["email"]=email;
+      params["nomeProdotto"]=nomeProdotto;
+      params["quantita"]=quantita.toString();
+      String res=await _cartManager.makePostRequest(Constants.ADDRESS_STORE_SERVER,
+          Constants.REQUEST_ADD_TO_CART);
+      if(res.contains(Constants.RESPONSE_ERROR_QUANTITY_PRODUCT_UNAVAILABLE)){
+        return addToCartResult.quantityUnavailable;
+      }
+      List pia=jsonDecode(res);
+      return addToCartResult.added;
+    }catch(err){
+      print(err);
+      return addToCartResult.unknown;
+    }
+  }
+
+  Future<addToCartResult> setQuantityToCart(String email,String nomeProdotto,int quantita ) async{
+    try{
+      Map<String,String> params={};
+      params["email"]=email;
+      params["nomeProdotto"]=nomeProdotto;
+      params["quantita"]=quantita.toString();
+      String res=await _cartManager.makePostRequest(Constants.ADDRESS_STORE_SERVER,
+          Constants.REQUEST_SET_QTY_TO_CART);
+      if(res.contains(Constants.RESPONSE_ERROR_QUANTITY_PRODUCT_UNAVAILABLE)){
+        return addToCartResult.quantityUnavailable;
+      }
+      List pia=jsonDecode(res);
+      return addToCartResult.setted;
+    }catch(err){
+      print(err);
+      return addToCartResult.unknown;
+    }
+  }
+
+  Future<HttpResult> setAcquistoDone(int id, bool done) async{
+    try{
+      Map<String,String> params=Map();
+      params["done"]=done.toString();
+      params["id"]=id.toString();
+      String res=await _cartManager.makeGetRequest(Constants.ADDRESS_STORE_SERVER,
+          Constants.REQUEST_SET_DONE);
+      return HttpResult.done;
+    }catch(err){
+      print(err);
+      return HttpResult.error;
+    }
+  }
 
 }//Model

@@ -30,10 +30,14 @@ class Constants {
   static final String REQUEST_EDIT_PRODUCTS="/prodotti/admin/edit";
   static final String REQUEST_ADD_PRODUCTS="/prodotti/admin/add";
   static final String REQUEST_DELETE_PRODUCTS="/prodotti/admin/delete/"; // +{idProdotto}
-  static final String REQUEST_ADD_ORDINE="/addOrdin";
-  static final String REQUEST_DELETE_ORDINE="/delete/";
-  static final String REQUEST_SEARCH_ORDINE_BY_USER="/get/";
-  static final String REQUEST_SEARCH_ORDINE_BY_DATA="/perData";
+  static final String REQUEST_ADD_TO_CART="/utenti/addToCart";
+  static final String REQUEST_SET_QTY_TO_CART="/utenti/setQuantityToCart";
+  static final String REQUEST_REMOVE_FROM_CART="/utenti/removeFromCart";
+  static final String REQUEST_GET_CART="/utenti/getCart";
+  static final String REQUEST_COMPRA_PR="/prodotti/compra";
+  static final String REQUEST_COMPRA_CART="/prodotti/acquistaCart";
+  static final String REQUEST_GET_ACQUISTI="/acquisto/getAcquisti";
+  static final String REQUEST_SET_DONE="/acquisto/setAcquistoDone";
 
 
   // states
@@ -45,6 +49,7 @@ class Constants {
   static final String RESPONSE_ERROR_USER_NOT_FOUND="ERROR_USER_NOT_FOUND";
   static final String RESPONSE_ERROR_QUANTITY_PRODUCT_UNAVAILABLE="ERROR_QUANTITY_PRODUCT_UNAVAILABLE";
   static final String RESPONSE_ERROR_PRODUCT_NOT_FOUND="ERROR_PRODUCT_NOT_FOUND";
+  static const String RESPONSE_ERROR_CART_IS_EMPTY = "CartIsEmptyException";
 
   // messages
   static final String MESSAGE_CONNECTION_ERROR = "connection_error";

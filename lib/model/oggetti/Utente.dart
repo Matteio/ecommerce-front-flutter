@@ -8,6 +8,7 @@ class Utente {
   String email;
   String indirizzo;
 
+
   Utente({required this.codiceFiscale, /*required this.codice,*/ required this.nome,
     required this.cognome,required this.telefono,required this.email,
      required this.indirizzo});

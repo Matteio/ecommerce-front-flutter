@@ -28,6 +28,7 @@ class _LoginState extends State<Login>{
   page p = page.login;
   bool _passwordVisible=false;
   Text _avviso=Text("");
+  //late Utente attuale;
 
 
   TextEditingController _controllerEmail = TextEditingController();
@@ -252,6 +253,7 @@ class _LoginState extends State<Login>{
       setState((){p=page.login;});
       Layout.setLogState(LogInResult.logged);
       print("Hai fatto l'accesso ");
+      //utente=await Model.sharedInstance.getUtente(_controllerEmail.text,_controllerPass);
     }else{
       setState((){
         p=page.login;

@@ -1,6 +1,6 @@
 class Prodotto{
 
-  int idprodotto;
+  dynamic idprodotto;
   String nome;
   String descrizione;
   double prezzo;
@@ -8,7 +8,7 @@ class Prodotto{
   String image;
 
   Prodotto({
-    required this.idprodotto,
+    this.idprodotto,
     required this.nome,
     required this.descrizione,
     required this.prezzo,
@@ -27,18 +27,17 @@ class Prodotto{
         disponibilita: json['disponibilita'],
         image: json['image'],
     );
-  }
+  }//fromJson
 
-  Map<String, dynamic> toJson(Prodotto prodotto){
-    return {
-      "idprodotto": prodotto.idprodotto,
-      "nome": prodotto.nome,
-      "descrizione": prodotto.descrizione,
-      "prezzo": prodotto.prezzo,
-      "disponibilita": prodotto.disponibilita,
-      "image": prodotto.image,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+      "idprodotto": idprodotto,
+      "nome": nome,
+      "descrizione": descrizione,
+      "prezzo": prezzo,
+      "disponibilita": disponibilita,
+      "image": image,
+  }; //toJson
+
 
   @override
   String toString() {
