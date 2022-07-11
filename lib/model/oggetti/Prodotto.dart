@@ -1,10 +1,16 @@
+
+import 'dart:convert';
+
+Prodotto prodottoFromJson(String s) => Prodotto.fromJson(json.decode(s));
+String prodottoToJson(Prodotto p) => json.encode(p.toJson());
+
 class Prodotto{
 
   dynamic idprodotto;
   String nome;
   String descrizione;
   double prezzo;
-  int? disponibilita;
+  int disponibilita;
   String image;
 
   Prodotto({
@@ -18,16 +24,14 @@ class Prodotto{
 
   //Prodotto.empty();
 
-  factory Prodotto.fromJson(Map<String, dynamic> json){
-    return Prodotto(
+  factory Prodotto.fromJson(Map<String, dynamic> json) => Prodotto(
         idprodotto: json['idprodotto'],
         nome: json['nome'],
         descrizione: json['descrizione'],
         prezzo: json['prezzo'],
         disponibilita: json['disponibilita'],
         image: json['image'],
-    );
-  }//fromJson
+    );//fromJson
 
   Map<String, dynamic> toJson() => {
       "idprodotto": idprodotto,
@@ -48,4 +52,5 @@ class Prodotto{
         ' disponibilita: $disponibilita,'
         ' image: $image}';
   }
+
 }//Prodotto

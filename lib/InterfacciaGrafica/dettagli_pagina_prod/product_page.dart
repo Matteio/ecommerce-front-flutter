@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:front_shop/InterfacciaGrafica/pagine/Carrello.dart';
+import 'package:front_shop/model/Model.dart';
 import 'package:front_shop/model/oggetti/Prodotto.dart';
+import 'package:front_shop/model/support/Constants.dart';
 import 'package:get/get.dart';
-
+import 'package:front_shop/InterfacciaGrafica/dettagli_pagina_prod/SnackBar.dart';
 import '../behaviors/prod_contr.dart';
+
+int numProdotti=1;
 
 class PaginaProdotto extends StatelessWidget {
 
   //final ProductController productController = Get.put(ProductController());
   final Prodotto prodotto;
   const PaginaProdotto({Key? key, required this.prodotto}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -69,6 +74,17 @@ class PaginaProdotto extends StatelessWidget {
                             fontWeight: FontWeight.w300
                           ),
                         ),
+                        const SizedBox(height: 20,),
+                        Text(
+                          "Disponibilità: "+prodotto.disponibilita.toString()+"pezzi",
+                          style: TextStyle(
+                              fontSize: 23,
+                              fontWeight: FontWeight.bold
+                          ),
+                        ),
+                        CartCount(
+                          prodotto: prodotto,
+                        ),
                       ],
                     ),
                   ),
@@ -82,7 +98,8 @@ class PaginaProdotto extends StatelessWidget {
         height: 70,
         color: Colors.orangeAccent,
         padding: EdgeInsets.all(10),
-        child: Row(
+        child:
+          Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(
@@ -103,7 +120,7 @@ class PaginaProdotto extends StatelessWidget {
             Expanded(
               child: InkWell(
                 onTap: () {
-                  _addToCart();
+                  _addToCart(context);
                 },
                 child: Container(
                   alignment: Alignment.center,
@@ -130,8 +147,103 @@ class PaginaProdotto extends StatelessWidget {
     );//scaffold
   }//build
 
-  void _addToCart(){
-
+  void _addToCart(BuildContext context){
+    Model.sharedInstance.setQuantityToCart(Constants.EMAIL, prodotto.nome, numProdotti).then((value) {
+      if(value==addToCartResult.setted){
+        snackBar(context, "Prodotto aggiunto al carrello", "ok");
+      }else if(value==addToCartResult.quantityUnavailable){
+        snackBar(context, "Non puoi aggiungere una quantità>disponibilità", "no");
+      }else{
+        snackBar(context, "errore", "no");
+      }
+      numProdotti=1;
+    });
   }//addToCart
 
+
 }//NomeProdottoEImmagine
+
+class CartCount extends StatefulWidget {
+
+  final Prodotto prodotto;
+  const CartCount({Key? key,required this.prodotto}) : super(key: key);
+
+  @override
+  State<CartCount> createState() => _CartCountState();
+}
+
+class _CartCountState extends State<CartCount> {
+  //int numProdotti=1;
+
+  @override
+  Widget build(BuildContext context) {
+    widget.prodotto;
+    return FittedBox(
+      fit: BoxFit.contain,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 40),
+        child: Column(
+          children: [
+            Row(
+              children: [
+                buildOutlinedButton(
+                    icon: Icons.remove,
+                    press: (){
+                      setState((){
+                        if(numProdotti>1) {
+                          numProdotti--;
+                        }
+                      });
+                    }),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 9.4),
+                  child: Text(
+                    numProdotti.toString().padLeft(2,"0"),
+                    style: TextStyle(
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+                buildOutlinedButton(
+                  icon: Icons.add,
+                  press: () {
+                    if(numProdotti<widget.prodotto.disponibilita){
+                      setState((){
+                        numProdotti++;
+                      });
+                    }//if
+                  }),
+              ],//children2
+            ),
+
+          ],//Children1
+        ),
+      ),
+    );//FittedBox
+  }//build
+
+  ClipRRect buildOutlinedButton(
+      {required IconData icon, required Function() press}) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(4),
+      child: Stack(
+        children: <Widget>[
+          Positioned.fill(
+              child: Container(
+                decoration: const BoxDecoration(
+                    color: Colors.white
+                ),
+              ),
+          ),
+            IconButton(
+              onPressed: press,
+              icon: Icon(icon,color: Colors.orangeAccent,),
+            )
+        ],
+      ),
+    );
+  }//buildOutlinedButton
+
+}//CartCounter
+
+

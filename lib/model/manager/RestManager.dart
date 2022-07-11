@@ -98,6 +98,10 @@ class RestManager{
 
   Future<String> makePostRequest(String serverAddress, String servicePath, dynamic value, {TypeHeader type = TypeHeader.json}) async {
     print("MakePostRequest");
+    print("serverAddress: " + serverAddress);
+    print("serverPath: " + servicePath);
+    print("value: " + value.toString());
+    print("type: " + type.toString());
     return _makeRequest(serverAddress, servicePath, "post", type, body: value);
   }
 

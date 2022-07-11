@@ -4,6 +4,7 @@ import 'package:front_shop/InterfacciaGrafica/pagine/Home.dart';
 import 'package:front_shop/InterfacciaGrafica/pagine/Carrello.dart';
 import 'package:front_shop/InterfacciaGrafica/pagine/Layout.dart';
 import 'package:front_shop/model/oggetti/Utente.dart';
+import 'package:front_shop/model/support/Constants.dart';
 import 'package:front_shop/model/support/LogInResult.dart';
 import 'package:front_shop/model/oggetti/User.dart';
 
@@ -121,8 +122,11 @@ class _LoginState extends State<Login>{
                       Container(
                         width: 250,
                         child: TextFormField(
+                          validator: (input) => !input!.contains("@")
+                              ? "Inserisci una mail valida"
+                              : null,
                           decoration: InputDecoration(
-                            labelText: 'Indirizzo Email o Username',
+                            labelText: 'Indirizzo Email',
                             suffixIcon: Icon(
                               FontAwesomeIcons.envelope,
                               size: 17,
@@ -134,6 +138,8 @@ class _LoginState extends State<Login>{
                       Container(
                         width: 250,
                         child: TextFormField(
+                          validator: (input) =>
+                          input == null ? "Perfavore inserisci una password" : null,
                           obscureText: !_passwordVisible,
                           decoration: InputDecoration(
                             labelText: 'Password',
@@ -250,6 +256,8 @@ class _LoginState extends State<Login>{
     //print("Prendo il LoginResult");
     LogInResult result= await Model.sharedInstance.logIn(_controllerEmail.text,_controllerPass.text);
     if(result==LogInResult.logged){
+      Constants.EMAIL=_controllerEmail.text;
+      print("Constants: "+Constants.EMAIL);
       setState((){p=page.login;});
       Layout.setLogState(LogInResult.logged);
       print("Hai fatto l'accesso ");
@@ -361,6 +369,9 @@ class _LoginState extends State<Login>{
                     Container(
                       width: 250,
                       child: TextFormField(
+                        validator: (input) => !input!.contains("@")
+                            ? "Inserisci una mail valida"
+                            : null,
                         decoration: InputDecoration(
                           labelText: 'Email',
                           suffixIcon: Icon(
@@ -387,6 +398,8 @@ class _LoginState extends State<Login>{
                     Container(
                       width: 250,
                       child: TextFormField(
+                        validator: (input) =>
+                        input == null ? "Perfavore inserisci una password" : null,
                         obscureText: !_passwordVisible,
                         decoration: InputDecoration(
                           labelText: 'Password',

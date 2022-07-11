@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:front_shop/InterfacciaGrafica/pagine/Cart.dart';
 import 'package:front_shop/InterfacciaGrafica/pagine/Home.dart';
 import 'package:front_shop/InterfacciaGrafica/pagine/Carrello.dart';
 import 'package:front_shop/InterfacciaGrafica/pagine/Login.dart';
@@ -60,11 +61,12 @@ class _LayoutState extends State<Layout> {
 
   Widget getBody(){
     return logInResult==LogInResult.logged?
-        TabBarView(children: [Home(), Carrello(), Loggato()]):
+        TabBarView(children: [Home(), Cart(), Loggato()]):
     TabBarView(children: [
                 Home(),
                 // ProdottiAdmin(),
-                Carrello(),
+                //Carrello(),
+                Cart(),
                 Login(),
     ]);
   }

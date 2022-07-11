@@ -21,20 +21,18 @@ class ProdottoInAcquisto{
     required this.quantita
   });
 
-  factory ProdottoInAcquisto.fromJson(Map<String, dynamic> json){
-    return ProdottoInAcquisto(
+  factory ProdottoInAcquisto.fromJson(Map<String, dynamic> json)=> ProdottoInAcquisto(
       idprodcarrello: json['idprodcarrello'],
       compratore: Utente.fromJson(json['compratore']),
       prodotto: Prodotto.fromJson(json['prodotto']),
       quantita: json['quantita'],
-    );
-  }//fromJson
+    ); //fromJson
 
   Map<String,dynamic> toJson() => {
     "idprodcarrello": idprodcarrello,
     "quantita": quantita,
-    "prodotto":prodotto,
-    "compratore":compratore
+    "prodotto":prodotto.toJson(),
+    "compratore":compratore.toJson(),
   };
 
 }//ProdottoInAcquisto
