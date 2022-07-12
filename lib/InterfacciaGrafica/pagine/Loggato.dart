@@ -280,6 +280,7 @@ class _LoggatoState extends State<Loggato> {
 
   void logoutDc(){
     Layout.setLogState(LogInResult.error_wrong_credentials);
+    Constants.EMAIL="";
     print("Logout");
   }//logoutDc
 

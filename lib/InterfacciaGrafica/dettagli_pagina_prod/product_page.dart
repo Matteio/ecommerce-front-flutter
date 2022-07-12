@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:front_shop/InterfacciaGrafica/pagine/Carrello.dart';
+import 'package:front_shop/InterfacciaGrafica/pagine/Layout.dart';
 import 'package:front_shop/model/Model.dart';
 import 'package:front_shop/model/oggetti/Prodotto.dart';
 import 'package:front_shop/model/support/Constants.dart';
+import 'package:front_shop/model/support/LogInResult.dart';
 import 'package:get/get.dart';
 import 'package:front_shop/InterfacciaGrafica/dettagli_pagina_prod/SnackBar.dart';
 import '../behaviors/prod_contr.dart';
+import 'package:front_shop/InterfacciaGrafica/pagine/Home.dart';
 
 int numProdotti=1;
 
@@ -15,7 +18,6 @@ class PaginaProdotto extends StatelessWidget {
   //final ProductController productController = Get.put(ProductController());
   final Prodotto prodotto;
   const PaginaProdotto({Key? key, required this.prodotto}) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -110,11 +112,12 @@ class PaginaProdotto extends StatelessWidget {
                 borderRadius: BorderRadius.circular(10),
                 border: Border.all(color: Colors.grey),
               ),
-              child: Icon(
-                Icons.shopping_cart,
-                size: 30,
-                color: Colors.grey,
-              ),
+              child: /*IconButton(
+                icon:*/ Icon(Icons.shopping_cart,size: 30,color: Colors.grey,),
+                //onPressed: (){
+                  //setState((){Layout.setLogState(LogInResult.logged);});
+                //},
+              //),
             ),
             SizedBox(width: 20),
             Expanded(

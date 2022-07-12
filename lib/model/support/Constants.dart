@@ -50,7 +50,7 @@ class Constants {
   static final String RESPONSE_ERROR_QUANTITY_PRODUCT_UNAVAILABLE="ERROR_QUANTITY_PRODUCT_UNAVAILABLE";
   static final String RESPONSE_ERROR_PRODUCT_NOT_FOUND="ERROR_PRODUCT_NOT_FOUND";
   static final String RESPONSE_ERROR_CART_IS_EMPTY = "CartIsEmptyException";
-  static String EMAIL="prova@prova.it";
+  static String EMAIL="";
 
   // messages
   static final String MESSAGE_CONNECTION_ERROR = "connection_error";

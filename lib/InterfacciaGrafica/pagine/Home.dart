@@ -11,9 +11,14 @@ class Home extends StatefulWidget{
 
   Home({Key? key}) : super(key: key);
 
+  //static _HomeState home= _HomeState() ;
+
   @override
   _HomeState createState() => _HomeState();
 
+  static void setPState(){
+    _HomeState().setPageState();
+  }
 }
 
 enum page {
@@ -26,6 +31,10 @@ class _HomeState extends State<Home>{
   bool _searching = false;
   late Prodotto attuale;
   late List<Prodotto> _prodotti=<Prodotto>[];
+
+  void setPageState(){
+    p=page.listaProd;
+  }
 
   TextEditingController _searchFiledController = TextEditingController();
 
@@ -94,9 +103,9 @@ class _HomeState extends State<Home>{
     Model.sharedInstance.searchProdotto(_searchFiledController.text).then((result) {
       setState(() {
         _searching=false;
-       // print(result);
+        //print(result);
         _prodotti=result;
-        print(_prodotti);
+        //print(_prodotti);
       });
     });
   }//search
@@ -114,7 +123,7 @@ class _HomeState extends State<Home>{
 
   Widget noResults() {
     return Text(
-      "Nessun Risultato!",
+      "",
       style: TextStyle(
         color: Colors.black,
       ),
